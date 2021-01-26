@@ -13,10 +13,9 @@ form = cgi.FieldStorage()
 username = form.getvalue('username')
 password = form.getvalue('password')
 
-if username == secret.username and password == secret.password:
-    print("Set-Cookie:loggies=yes")
-
-cookies = os.environ['HTTP_COOKIE'].split(";")
+if username == secret.username:
+    if password == secret.password:
+        print("Set-Cookie:loggies=yes")
 
 print('Content-Type: text/html')
 print()
@@ -25,11 +24,14 @@ print("""<!doctype html>
     <body>
     """)
 
+cookies = os.environ['HTTP_COOKIE'].split(";")
 for cookie in cookies:
-    (key, value) = cookie.split("=")
+    key, value = cookie.split("=")
 
     if key == "loggies" and value == "yes":
         print(templates.secret_page(username, password))
+    else:
+        print(templates.after_login_incorrect())
 
 print("""
     </body>
