@@ -30,8 +30,8 @@ for cookie in cookies:
 
     if key == "loggies" and value == "yes":
         print(templates.secret_page(username, password))
-    else:
-        print(templates.after_login_incorrect())
+    # else:
+    #     print(templates.after_login_incorrect())
 
 print("""
     </body>
